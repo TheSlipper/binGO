@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .BingoName }}</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            background-color: white;
+        }
+        td {
+            /*width: 160px;*/
+            /*max-width: 160px;*/
+            height: 160px;
+            max-height: 160px;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            max-width: 160px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>{{ .BingoName }}</h1>
+<table>
+    {{ $img := .ImgPath }}
+    {{ range $ind, $val := .Entries}}
+        {{ if mod $ind 5 }}
+            <tr>
+        {{ end }}
+
+        {{ if eq $ind 12 }}
+            <td onclick="changeColor(this)">
+            <img src="{{ $img }}"></td>
+        {{ else }}
+            <td onclick="changeColor(this)">{{ $val }}</td>
+        {{ end }}
+
+        {{ if modWithStr (add $ind 1) 5 }}
+            </tr>
+        {{ end }}
+    {{ end }}
+</table>
+<script>
+    function changeColor(elem) {
+        if (elem.style.backgroundColor === "")
+            elem.style.backgroundColor = "white";
+        if (elem.style.backgroundColor === "white") {
+            elem.style.backgroundColor = "green";
+        } else if (elem.style.backgroundColor.localeCompare("green") === 0) {
+            elem.style.backgroundColor = "red";
+        } else if (elem.style.backgroundColor.localeCompare("red") === 0) {
+            elem.style.backgroundColor = "white";
+        }
+    }
+</script>
+</body>
+</html>
